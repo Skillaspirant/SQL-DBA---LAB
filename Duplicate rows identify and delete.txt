@@ -1,0 +1,38 @@
+SELECT [FirstName], 
+    [LastName], 
+    [Country], 
+    COUNT(*) AS CNT
+FROM [SampleDB].[dbo].[Employee]
+GROUP BY [FirstName], 
+      [LastName], 
+      [Country]
+HAVING COUNT(*) > 1;
+
+
+
+
+
+SELECT *
+    FROM [SampleDB].[dbo].[Employee]
+    WHERE ID NOT IN
+    (
+        SELECT MAX(ID)
+        FROM [SampleDB].[dbo].[Employee]
+        GROUP BY [FirstName], 
+                 [LastName], 
+                 [Country]
+    );
+
+
+
+DELETE FROM [SampleDB].[dbo].[Employee]
+    WHERE ID NOT IN
+    (
+        SELECT MAX(ID) AS MaxRecordID
+        FROM [SampleDB].[dbo].[Employee]
+        GROUP BY [FirstName], 
+                 [LastName], 
+                 [Country]
+    );
+
+
